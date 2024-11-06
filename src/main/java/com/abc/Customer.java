@@ -60,6 +60,9 @@ public class Customer {
             case Account.MAXI_SAVINGS:
                 s += "Maxi Savings Account\n";
                 break;
+            case Acccount.SUPER_SAVINGS:
+                s+= "Super Savings Account\n";
+                break;
         }
 
         //Now total up all the transactions
@@ -74,5 +77,39 @@ public class Customer {
 
     private String toDollars(double d){
         return String.format("$%,.2f", abs(d));
+    }
+
+    /*
+    * method to transfer funds to customer's another account
+    */
+    public Boolean transferFunds(Account fromAccount,Acccount toAccount,double amount){
+           try{
+                Boolean isAccountsBelongtoCustomer = checkIfAccountBelongs(fromAccount,toAccount);
+                
+                if(isAccountsBelongtoCustomer){
+                    fromAccount.withdraw(amount);
+                    toAccount.deposit(amount);
+                    return true; 
+                }
+                else{
+                    return false;
+                }
+           } catch(IllegalArgumentException ex){
+                    //log the error
+                    return false;
+            }
+    }
+
+    private Boolean checkIfAccountBelongs(Account fromAccount,Account toAccount){
+        if(fromAccount.getNumberOfAccounts > 1){
+            if(fromAccount.getName().equalsIgnoreCase(toAccount.getName())){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }else{
+            return false;
+        }
     }
 }

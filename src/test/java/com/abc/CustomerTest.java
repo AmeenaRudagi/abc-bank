@@ -54,4 +54,12 @@ public class CustomerTest {
         oscar.openAccount(new Account(Account.CHECKING));
         assertEquals(3, oscar.getNumberOfAccounts());
     }
+    
+    @Test
+    public void testTransferFunds(){
+         Customer oscar = new Customer("Oscar")
+                .openAccount(new Account(Account.SAVINGS));
+        oscar.openAccount(new Account(Account.CHECKING));
+        assertEquals(true,oscar.transferFunds(oscar.getAccountType(Account.SAVINGS),oscar.getAccountType(Account.CHECKING),1000));
+    }
 }
