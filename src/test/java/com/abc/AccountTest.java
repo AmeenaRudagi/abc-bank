@@ -29,4 +29,20 @@ public class AccountTest {
         assertEquals(5000,a1.sumTransactions(),0);
         assertEquals(5000,a2.sumTransactions(),0);
     }
+
+    @Test
+    public void testInterestEarned(){
+        //creating super saving account
+         Account account1 = new Account(3);
+         account1.deposit(2000);
+         assertEquals(90,account1.interestEarned());
+    }
+
+    @Test
+    public void testInterestEarned(){
+        //creating savings account
+         Account account1 = new Account(1);
+         account1.deposit(2000);
+         assertEquals(3,account1.interestEarned());
+    }
 }
