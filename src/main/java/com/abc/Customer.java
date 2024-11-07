@@ -86,12 +86,11 @@ public class Customer {
            try{
                 Boolean isAccountsBelongtoCustomer = checkIfAccountBelongs(fromAccount,toAccount);
                 
-                if(isAccountsBelongtoCustomer){
-                    fromAccount.withdraw(amount);
-                    toAccount.deposit(amount);
-                    return true; 
-                }
-                else{
+                if(isAccountsBelongtoCustomer && fromAccount.balance >= amount){
+                        fromAccount.withdraw(amount);
+                        toAccount.deposit(amount);
+                        return true; 
+                }else{
                     return false;
                 }
            } catch(IllegalArgumentException ex){
@@ -101,15 +100,10 @@ public class Customer {
     }
 
     private Boolean checkIfAccountBelongs(Account fromAccount,Account toAccount){
-        if(fromAccount.getNumberOfAccounts > 1){
-            if(fromAccount.getName().equalsIgnoreCase(toAccount.getName())){
+        if(fromAccount.getNumberOfAccounts > 1 && (fromAccount.getName().equalsIgnoreCase(toAccount.getName()))){
                 return true;
-            }
-            else{
+            }else{
                 return false;
-            }
-        }else{
-            return false;
         }
     }
 }
