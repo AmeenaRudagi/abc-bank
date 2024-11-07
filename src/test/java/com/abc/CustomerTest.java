@@ -60,6 +60,37 @@ public class CustomerTest {
          Customer oscar = new Customer("Oscar")
                 .openAccount(new Account(Account.SAVINGS));
         oscar.openAccount(new Account(Account.CHECKING));
+        oscar.getAccountType(Account.SAVINGS).balance = 2000;
         assertEquals(true,oscar.transferFunds(oscar.getAccountType(Account.SAVINGS),oscar.getAccountType(Account.CHECKING),1000));
+    }
+
+    @Test
+    public void testTransferFunds(){
+         Customer oscar = new Customer("Oscar")
+                .openAccount(new Account(Account.SAVINGS));
+         Customer peter = new Customer("peter")
+                .openAccount(new Account(Account.SAVINGS));
+        oscar.getAccountType(Account.SAVINGS).balance = 2000;
+        //error on account deosnt belong to customer
+        assertEquals(false,oscar.transferFunds(oscar.getAccountType(Account.SAVINGS),peter.getAccountType(Account.SAVINGS),1000));
+    }
+
+    @Test
+    public void testTransferFunds(){
+        Customer oscar = new Customer("Oscar")
+                .openAccount(new Account(Account.SAVINGS));
+        oscar.openAccount(new Account(Account.CHECKING));
+        //error on insuffient amount
+        assertEquals(false,oscar.transferFunds(oscar.getAccountType(Account.SAVINGS),peter.getAccountType(Account.SAVINGS),1000));
+    }
+
+      @Test
+    public void testTransferFunds(){
+        Customer oscar = new Customer("Oscar")
+                .openAccount(new Account(Account.SAVINGS));
+        oscar.openAccount(new Account(Account.CHECKING));
+        oscar.getAccountType(Account.SAVINGS).balance = 1000;
+        //error on creation of transaction as amount is non positive
+        assertEquals(false,oscar.transferFunds(oscar.getAccountType(Account.SAVINGS),peter.getAccountType(Account.SAVINGS),-10));
     }
 }
