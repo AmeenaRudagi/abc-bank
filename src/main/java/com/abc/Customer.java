@@ -6,6 +6,7 @@ import java.util.List;
 import static java.lang.Math.abs;
 
 public class Customer {
+    private final Logger LOG = LoggerFactory.getLogger(Customer.class);
     private String name;
     private List<Account> accounts;
 
@@ -89,12 +90,15 @@ public class Customer {
                 if(isAccountsBelongtoCustomer && fromAccount.balance >= amount){
                         fromAccount.withdraw(amount);
                         toAccount.deposit(amount);
+                        LOG.info("Transfered funds successfully..!");
                         return true; 
                 }else{
+                    LOG.info("Insufficient funds or Account doesn't belong to customer..!");
+                    LOG.error("Insufficient funds or Account doesn't belong to customer..!");
                     return false;
                 }
            } catch(IllegalArgumentException ex){
-                    //log the error
+                    LOG.error("Exception while transferring funds..!");
                     return false;
             }
     }
